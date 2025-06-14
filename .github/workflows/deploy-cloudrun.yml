@@ -28,9 +28,9 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t organickarnali/${{ secrets.GCP_PROJECT_ID }}/organickarnali_backend:latest .
-        docker push organickarnali/${{ secrets.GCP_PROJECT_ID }}/organickarnali_backend:latest
+        docker build -t organickarnali/${{ secrets.GCP_PROJECT_ID }}/hackathon1-1:latest .
+        docker push organickarnali/${{ secrets.GCP_PROJECT_ID }}/hackathon1-1:latest
 
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy organickarnali-backend --image organickarnali/${{ secrets.GCP_PROJECT_ID }}/organickarnali_backend:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated --port 8080
+        gcloud run deploy organickarnali-backend --image organickarnali/${{ secrets.GCP_PROJECT_ID }}/hackathon1-1:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated --port 8080
