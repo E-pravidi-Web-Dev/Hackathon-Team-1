@@ -8,18 +8,15 @@ ENV PORT=8080
 WORKDIR /app
 
 # --- Build instructions start ---
-# Copy package.json and package-lock.json if present
-COPY package*.json ./
-
-# Install dependencies if package.json exists
-RUN if [ -f package.json ]; then npm install --omit=dev; fi
+# Add your build steps here (e.g., install dependencies, build assets, etc.)
 # --- Build instructions end ---
 
-# Copy all other files
-COPY . .
+# Copy server and static files
+COPY server.js ./
+COPY index.html ./
 
 # Expose the port Cloud Run expects
 EXPOSE 8080
 
-# Start the app (participants should ensure their app listens on port 8080)
-CMD ["npm", "start"]
+# Start the server
+CMD ["node", "server.js"]
