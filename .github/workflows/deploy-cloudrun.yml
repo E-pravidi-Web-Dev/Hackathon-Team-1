@@ -24,13 +24,13 @@ jobs:
 
     - name: Configure Docker to use gcloud as a credential helper
       run: |
-        gcloud auth configure-docker organickarnali
+        gcloud auth configure-docker asia-south1-docker.pkg.dev
 
     - name: Build Docker image
       run: |
-        docker build -t organickarnali/${{ secrets.GCP_PROJECT_ID }}/hackathon1-1:latest .
-        docker push organickarnali/${{ secrets.GCP_PROJECT_ID }}/hackathon1-1:latest
+        docker build -t asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/organickarnali/hackathon1-1:latest .
+        docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/organickarnali/hackathon1-1:latest
 
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy organickarnali-backend --image organickarnali/${{ secrets.GCP_PROJECT_ID }}/hackathon1-1:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated --port 8080
+        gcloud run deploy organickarnali-backend --image asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/organickarnali/hackathon1-1:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated --port 8080
