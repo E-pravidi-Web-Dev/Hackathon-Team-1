@@ -83,6 +83,7 @@ Response:
       "_id": "product_id",
       "name": "Product Name",
       "description": "Product Description",
+      "imageUrl": "https://example.com/images/product.jpg",
       "price": 99.99,
       "category": "electronics",
       "specifications": [
@@ -101,6 +102,16 @@ Response:
 
 ### Admin Product APIs
 
+Product objects include the following fields:
+- `name`: Required, string
+- `description`: Required, string
+- `imageUrl`: Optional, string (valid URL)
+- `price`: Required, number (non-negative)
+- `category`: Required, string
+- `specifications`: Array of key-value pairs
+- `inStock`: Boolean, defaults to true
+- `discount`: Object with percentage and validUntil date
+
 #### Create Product (Admin)
 ```http
 POST /admin/products
@@ -109,6 +120,7 @@ Request:
 {
   "name": "New Product",
   "description": "Product Description",
+  "imageUrl": "https://example.com/images/product.jpg",
   "price": 99.99,
   "category": "electronics",
   "specifications": [

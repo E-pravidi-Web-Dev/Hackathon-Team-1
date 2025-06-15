@@ -5,11 +5,15 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide product name'],
     trim: true,
-  },
-  description: {
+  },  description: {
     type: String,
     required: [true, 'Please provide product description'],
-  },  price: {
+  },
+  imageUrl: {
+    type: String,
+    default: ''
+  },
+  price: {
     type: Number,
     required: [true, 'Please provide product price'],
     min: [0, 'Price cannot be negative'],
