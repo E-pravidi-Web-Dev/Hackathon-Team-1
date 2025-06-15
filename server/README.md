@@ -359,6 +359,124 @@ Response:
 }
 ```
 
+### Quotation Email APIs
+
+#### 1. Send Quotation Email (Public)
+Send a quotation email for a list of products.
+
+```http
+POST /api/quotations/send
+```
+
+Request body:
+```json
+{
+  "items": [
+    {
+      "productId": "507f1f77bcf86cd799439011",
+      "quantity": 2
+    },
+    {
+      "productId": "507f1f77bcf86cd799439012",
+      "quantity": 1
+    }
+  ],
+  "customerName": "John Doe",
+  "customerEmail": "john@example.com",
+  "companyName": "Acme Corp"  // optional
+}
+```
+
+Response:
+```json
+{
+  "success": true,
+  "message": "Quotation email sent successfully"
+}
+```
+
+#### 2. Send Quotation Email (Admin)
+Send a quotation email for an existing quotation.
+
+```http
+POST /api/admin/quotations/send
+```
+
+Request body:
+```json
+{
+  "quotationId": "507f1f77bcf86cd799439011"
+}
+```
+
+Response:
+```json
+{
+  "success": true,
+  "message": "Quotation email sent successfully",
+  "data": {
+    "_id": "507f1f77bcf86cd799439011",
+    "status": "sent",
+    "sentAt": "2025-06-16T10:00:00.000Z",
+    "customer": {
+      "_id": "507f1f77bcf86cd799439020",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "company": "Acme Corp"
+    },
+    "items": [
+      {
+        "product": {
+          "_id": "507f1f77bcf86cd799439030",
+          "name": "Product 1",
+          "price": 99.99
+        },
+        "quantity": 2
+      }
+    ]
+  }
+}
+```
+
+### Quotation PDF APIs
+
+#### Generate Quotation PDF
+Generate a PDF for either a list of products or an existing quotation.
+
+```http
+POST /api/quotations/download
+```
+
+1. For a list of products:
+```json
+{
+  "items": [
+    {
+      "productId": "507f1f77bcf86cd799439011",
+      "quantity": 2
+    },
+    {
+      "productId": "507f1f77bcf86cd799439012",
+      "quantity": 1
+    }
+  ],
+  "customerName": "John Doe",
+  "companyName": "Acme Corp"  // optional
+}
+```
+
+2. For an existing quotation:
+```json
+{
+  "quotationId": "507f1f77bcf86cd799439011"
+}
+```
+
+Response:
+- Content-Type: application/pdf
+- Content-Disposition: attachment; filename="quotation.pdf"
+- Body: Binary PDF file
+
 ## Error Responses
 All APIs return errors in this format:
 ```json
@@ -367,6 +485,20 @@ All APIs return errors in this format:
   "error": "Error message here"
 }
 ```
+
+### Environment Variables
+
+To use the email functionality, set up the following environment variables:
+
+```env
+SMTP_HOST=your-smtp-host
+SMTP_PORT=your-smtp-port
+SMTP_SECURE=true/false
+SMTP_USER=your-smtp-username
+SMTP_PASS=your-smtp-password
+SMTP_FROM=your-from-email
+```
+
 
 Common HTTP Status Codes:
 - 200: Success
@@ -377,3 +509,4 @@ Common HTTP Status Codes:
 - 404: Not Found
 - 405: Method Not Allowed
 - 500: Internal Server Error
+
