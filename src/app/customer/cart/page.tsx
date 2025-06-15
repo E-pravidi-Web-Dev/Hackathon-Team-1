@@ -237,7 +237,7 @@ export default function ShoppingCart() {
                                     </Button>
                                     <div className="text-sm text-gray-600 space-y-1">
                                         <p>• Review will be completed within 24 hours</p>
-                                        <p>• You'll receive email confirmation</p>
+                                        <p>• You&apos;ll receive email confirmation</p>
                                         <p>• No payment required until approval</p>
                                     </div>
                                 </CardContent>

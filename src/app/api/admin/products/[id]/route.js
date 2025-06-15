@@ -1,6 +1,5 @@
 import connectDB from '@/lib/db';
 import Product from '@/models/Product';
-import { withAdmin } from '@/middleware/auth';
 import { NextResponse } from 'next/server';
 
 function getIdFromRequest(request) {

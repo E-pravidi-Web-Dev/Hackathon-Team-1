@@ -264,7 +264,7 @@ export default function GenerateQuote() {
                                 </Button>
                                 <div className="text-sm text-gray-600 space-y-1">
                                     <p>• Quote will be reviewed within 24 hours</p>
-                                    <p>• You'll receive email confirmation</p>
+                                    <p>• You&apos;ll receive email confirmation</p>
                                     <p>• No commitment until you approve</p>
                                 </div>
                             </CardContent>

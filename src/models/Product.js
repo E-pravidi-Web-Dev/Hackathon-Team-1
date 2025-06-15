@@ -5,11 +5,15 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide product name'],
     trim: true,
-  },
-  description: {
+  }, description: {
     type: String,
     required: [true, 'Please provide product description'],
-  },  price: {
+  },
+  imageUrl: {
+    type: String,
+    default: ''
+  },
+  price: {
     type: Number,
     required: [true, 'Please provide product price'],
     min: [0, 'Price cannot be negative'],
@@ -50,19 +54,19 @@ const productSchema = new mongoose.Schema({
 });
 
 // Calculate final price with discount
-productSchema.methods.getFinalPrice = function() {
+productSchema.methods.getFinalPrice = function () {
   if (!this.discount || !this.discount.percentage) return this.price;
-  
+
   // Check if discount is expired
   if (this.discount.validUntil && new Date() > this.discount.validUntil) {
     return this.price;
   }
-  
+
   return this.price * (1 - this.discount.percentage / 100);
 };
 
 // Add virtual field for final price
-productSchema.virtual('finalPrice').get(function() {
+productSchema.virtual('finalPrice').get(function () {
   return this.getFinalPrice();
 });
 
@@ -71,7 +75,7 @@ productSchema.set('toJSON', { virtuals: true });
 productSchema.set('toObject', { virtuals: true });
 
 // Update the updatedAt timestamp before saving
-productSchema.pre('save', function(next) {
+productSchema.pre('save', function (next) {
   this.updatedAt = new Date();
   next();
 });

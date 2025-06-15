@@ -1,6 +1,5 @@
 import connectDB from '@/lib/db';
 import Customer from '@/models/Customer';
-import { withAdmin } from '@/middleware/auth';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
