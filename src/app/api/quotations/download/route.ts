@@ -32,7 +32,7 @@ export async function POST(request: Request) {
             }
 
             quotationData = {
-                products: quotation.items.map(item => ({
+                products: quotation.items.map((item:any) => ({
                     ...item.product.toObject(),
                     quantity: item.quantity
                 })),

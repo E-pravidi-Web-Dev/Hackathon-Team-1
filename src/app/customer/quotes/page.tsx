@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ArrowLeft, Search, Eye, Download, MessageSquare, Plus } from "lucide-react"
+import QuotationTable from "@/components/ui/QuotationsTable"
 
 interface Quote {
     id: string
@@ -172,7 +173,10 @@ export default function CustomerQuotes() {
                 </div>
 
                 {/* Quotes Table */}
-                <Card>
+
+                <QuotationTable/>
+
+                {/* <Card>
                     <CardHeader>
                         <CardTitle>Quotation History</CardTitle>
                         <CardDescription>Track the status of your quotation requests</CardDescription>
@@ -231,7 +235,7 @@ export default function CustomerQuotes() {
                             </div>
                         )}
                     </CardContent>
-                </Card>
+                </Card> */}
             </div>
         </div>
     )
