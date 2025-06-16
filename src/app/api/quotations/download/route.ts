@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
 import connectDB from '@/lib/db';
 import Product from '@/models/Product';
 import Quotation from '@/models/Quotation';
-import { generateQuotationPDF, bufferToStream } from '@/lib/pdfGenerator';
+import { generateQuotationPDF } from '@/lib/pdfGenerator';
 
 interface ProductRequestBody {
     items: Array<{
@@ -14,13 +13,26 @@ interface ProductRequestBody {
     companyName?: string;
 }
 
+interface Product {
+    _id: string;
+    name: string;
+    price: number;
+    description?: string;
+    toObject(): Record<string, unknown>;
+}
+
+interface QuotationItem {
+    product: Product;
+    quantity: number;
+}
+
 export async function POST(request: Request) {
     await connectDB();
     const body = await request.json();
-    
+
     try {
         let quotationData;
-        
+
         // Check if it's a quotation ID request
         if ('quotationId' in body) {
             const quotation = await Quotation.findById(body.quotationId)
@@ -32,7 +44,7 @@ export async function POST(request: Request) {
             }
 
             quotationData = {
-                products: quotation.items.map((item:any) => ({
+                products: quotation.items.map((item: QuotationItem) => ({
                     ...item.product.toObject(),
                     quantity: item.quantity
                 })),
@@ -81,12 +93,10 @@ export async function POST(request: Request) {
         const pdfBuffer = await generateQuotationPDF(quotationData);
 
         // Create response with PDF
-        const headersList = headers();
-        const response = new NextResponse(bufferToStream(pdfBuffer));
-        
-        response.headers.set('Content-Type', 'application/pdf');
+        const response = new NextResponse(new Blob([new Uint8Array(pdfBuffer)], { type: 'application/pdf' }));
+
         response.headers.set('Content-Disposition', 'attachment; filename="quotation.pdf"');
-        
+
         return response;
 
     } catch (error) {

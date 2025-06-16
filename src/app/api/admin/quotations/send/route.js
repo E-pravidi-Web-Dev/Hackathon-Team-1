@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { sendQuotationEmail } from '@/lib/emailUtils';
-import { withAuth } from '@/middleware/auth';
 import connectDB from '@/lib/db';
 import Quotation from '@/models/Quotation';
 
