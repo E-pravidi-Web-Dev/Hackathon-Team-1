@@ -16,7 +16,8 @@ RUN npm ci --prefer-offline --no-audit
 # Copy the rest of the application code
 COPY . .
 
-# Build the Next.js application
+# Ensure proper Next.js build
+ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
 # Production stage
@@ -32,6 +33,8 @@ COPY --from=builder /app/package-lock.json* ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/tsconfig.json ./
 
 ENV NODE_ENV=production
 ENV PORT=8080
