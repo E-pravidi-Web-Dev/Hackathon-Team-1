@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
-        serverActions: true,
-    },
-    // Enable API routes
-    api: {
-        bodyParser: true,
+        serverActions: {
+            allowedOrigins: ['localhost:3000'],
+        },
     },
     // Ensure proper handling of API routes
     rewrites: async () => {
