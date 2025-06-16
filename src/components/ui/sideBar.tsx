@@ -3,10 +3,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { 
-  FileText, 
-  Users, 
+  FileText,  
   Package, 
-  BarChart3
+  LayoutDashboard,
+  ShoppingCart
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const pathname = usePathname()
   const [active,setActive] = useState(activeItem)
   const router = useRouter()
-  const navItems = [
+  const customerNavItems = [
     {
       id: 'quotations',
       label: 'Quotations',
@@ -37,7 +37,51 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: Package,
       href: '/customer/products'
     },
+    {
+      id: 'dashboard',
+      label: "Dashbboard",
+      icon: LayoutDashboard,
+      href: '/customer/dashboard'
+
+    },
+    {
+      id:'cart',
+      label: "Cart",
+      icon:ShoppingCart,
+      href:'/customer/cart'
+    }
   ];
+
+  const adminNavItems = [
+        {
+      id: 'quotations',
+      label: 'Quotations',
+      icon: FileText,
+      href: '/admin/quotations'
+    },
+
+    {
+      id: 'products',
+      label: 'Products',
+      icon: Package,
+      href: '/admin/products'
+    },
+    {
+      id: 'dashboard',
+      label: "Dashbboard",
+      icon: LayoutDashboard,
+      href: '/admin/dashboard'
+
+    },
+    {
+      id:'customers',
+      label: "Customers",
+      icon:ShoppingCart,
+      href:'/admin/customers'
+    }
+  ]
+
+  const navItems = pathname.startsWith('/admin/')?adminNavItems:customerNavItems
 
   const handleItemClick = (itemId:string, href:string) => {
       router.push(href);
@@ -46,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   useEffect(()=>{
-    navItems.map((item)=>{
+    customerNavItems.map((item)=>{
       if(item.href==pathname){
         setActive(item.id)
       }
@@ -58,6 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   if(pathname=="/" || pathname=="/customer/login" || pathname=="/customer/signup"){
     return;
   }
+  
 
   
 
