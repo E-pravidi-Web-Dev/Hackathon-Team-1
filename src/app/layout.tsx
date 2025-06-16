@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import Sidebar from "@/components/ui/sideBar";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -31,7 +32,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`${poppins.variable} antialiased`}>
-        {children}
+        <div className="">
+          <div className="flex w-full">
+            <div>
+              <Sidebar />
+            </div>
+            <div className="w-full">
+              {children}
+            </div>
+          </div>
+        </div>
       </body>
     </html >
   );
